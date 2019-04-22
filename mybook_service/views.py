@@ -63,3 +63,6 @@ def logout(request):
         response = HttpResponseRedirect('/')
         response.delete_cookie('mybook_authorization_cookie')
         return response
+
+def custom_redirect_to_index(requests):
+		return redirect('index')
