@@ -12,16 +12,28 @@ def index(request):
 		jar = requests.cookies.RequestsCookieJar()
 		jar.set('session', request.COOKIES['mybook_authorization_cookie'], domain='.mybook.ru')
 		headers = { 'Accept': 'application/json; version=5'}
-		g = requests.get('https://mybook.ru/api/bookuserlist/', cookies=jar, headers=headers)
 		books = []
-		for obj in g.json()['objects']:
-			books.append({'name': obj['book']['name'], 'authors': obj['book']['authors_names'], 
-				'cover': 'https://i3.mybook.io/c/256x426/' + obj['book']['default_cover']})
+		books.extend(get_books('', jar, headers))
 		return render(request, 'index.html', { 'authorized': authorized, 'books': books })
 	else:
 		authorized = False
 		form = LoginForm()
 		return render(request, 'index.html', { 'authorized': authorized, 'form': form })
+
+def get_books(next, jar, headers):
+	print(next)
+	books = []
+	if next == '':
+		adress = 'https://mybook.ru/api/bookuserlist/'
+	else:
+		adress = 'https://mybook.ru' + next
+	g = requests.get(adress, cookies=jar, headers=headers)
+	for obj in g.json()['objects']:
+		books.append({'name': obj['book']['name'], 'authors': obj['book']['authors_names'], 
+			'cover': 'https://i3.mybook.io/c/256x426/' + obj['book']['default_cover']})
+	if g.json()['meta']['next'] is not None:
+		books.extend(get_books(g.json()['meta']['next'], jar, headers))
+	return books
 
 def login(request):
 	if request.method == 'POST':

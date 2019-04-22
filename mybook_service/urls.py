@@ -22,5 +22,5 @@ urlpatterns = [
     re_path(r'^$', views.index, name='index'),
     re_path(r'login', views.login, name='login'),
     re_path(r'logout', views.logout, name='logout'),
-    re_path(r'.*', views.custom_redirect_to_index, name='custom_redirect_to_index')
+    # re_path(r'^.+', views.custom_redirect_to_index, name='custom_redirect_to_index')
 ]
