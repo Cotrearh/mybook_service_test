@@ -19,5 +19,5 @@ from mybook_site import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mybook_service/', include('mybook_service.urls')),
+    path('', include('mybook_service.urls')),
 ]

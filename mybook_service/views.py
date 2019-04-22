@@ -35,7 +35,7 @@ def login(request):
 					)
 			if r.status_code == requests.codes.ok:
 				auth_cookie = r.cookies.get('session', domain='.mybook.ru')
-				response = HttpResponseRedirect('/mybook_service')
+				response = HttpResponseRedirect('/')
 				response.set_cookie('mybook_authorization_cookie', auth_cookie, 3600 * 24 * 365 * 2)
 				return response
 			else:
@@ -61,6 +61,6 @@ def login(request):
 		return redirect('index')
 
 def logout(request):
-        response = HttpResponseRedirect('/mybook_service')
+        response = HttpResponseRedirect('/')
         response.delete_cookie('mybook_authorization_cookie')
         return response

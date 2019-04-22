@@ -26,6 +26,7 @@ SECRET_KEY = '#=i-5=_)q^#yrk6y08-+k1xoaj&s62&*@tc*new5%v8%q7t*fz'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+'127.0.0.1',
 'mybook-service.herokuapp.com'
 ]
 
