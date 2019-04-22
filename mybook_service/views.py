@@ -39,7 +39,6 @@ def login(request):
 				response.set_cookie('mybook_authorization_cookie', auth_cookie, 3600 * 24 * 365 * 2)
 				return response
 			else:
-				print(r.json())
 				try:
 					form.add_error('e_mail', r.json()['email'][0])
 				except KeyError:
