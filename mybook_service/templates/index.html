@@ -1,0 +1,61 @@
+</!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+{% if authorized %}
+<a style="display: inline-block; border: 1px solid red; text-decoration: none; background-color: red; color: white; padding: 5px" href="{% url 'logout' %}">Выйти</a>
+<table>
+	<tr>
+		<th>Наименование</th>
+		<th>Автор</th>
+		<th>Обложка</th>
+	</tr>
+{% for k in books %}
+	<tr>
+		<td>
+			{{ k.name }}	
+		</td>
+		<td>
+			{{ k.authors }}	
+		</td>
+		<td>
+			<img src="{{ k.cover }}">	
+		</td>
+	</tr>
+{% endfor %}
+</table>
+{% else %}
+<div style="border: 1px solid black; display: block; width: 50%; margin: 100px auto; text-align: center;">
+	<form method="POST" action="{% url 'login' %}">
+		{% csrf_token %}
+		<div>
+			<h3>Авторизация</h3>
+		</div>
+		<div>
+			E-mail:
+		</div>
+		<div>
+			{{ form.e_mail }}
+		</div>
+		<div>
+			{{ form.e_mail.errors }}
+		</div>
+		<div>
+			Password:
+		</div>
+		<div>
+			{{ form.password }}
+		</div>
+		<div>
+			{{ form.password.errors }}
+		</div>
+		<div>
+			<button type="submit">Войти</button>
+		</div>
+	</form>
+</div>
+{% endif %}
+</body>
+</html>
